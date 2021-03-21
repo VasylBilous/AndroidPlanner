@@ -14,12 +14,17 @@ namespace Planner.WebApi.Controllers
     {
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody]LoginDTO model)
+        public async Task<IActionResult> Login([FromBody] LoginDTO model)
         {
-            return Ok(new 
+            if (!ModelState.IsValid)
             {
-                token = "asdfalflaskdfalsdfj"
+                return BadRequest(CustomValidator.GetErrorsByModel(ModelState)); 
+            }
+            return Ok(new ResultDto
+            {
+                Token = "asdfalflaskdfalsdfj"
             });
         }
+
     }
 }

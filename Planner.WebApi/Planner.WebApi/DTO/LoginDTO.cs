@@ -8,9 +8,11 @@ namespace Planner.WebApi.DTO
 {
     public class LoginDTO
     {
-        [Required, EmailAddress]
+        [Required(ErrorMessage = "Email is required"), EmailAddress(ErrorMessage = "Wrong email")]
         public string Email { get; set; }
-        [Required]
+
+        [RegularExpression("/^.{6,}$/", ErrorMessage = "WrongPassword")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
     }
 }
