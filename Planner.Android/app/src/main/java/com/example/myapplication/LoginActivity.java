@@ -72,18 +72,6 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginDto dto = new LoginDto(email.getText().toString(), password.getText().toString());
 
-       /* if (dto.getEmail().isEmpty()) {
-            emailLayout.setError("Enter email!");
-            return;
-        } else
-            emailLayout.setError("");
-
-        if (dto.getPassword().isEmpty()) {
-            password.setError("Enter password!");
-            return;
-        } else
-            passwordLayout.setError("");*/
-
         CommonUtils.showLoading(this);
         AccountService.getInstance()
                 .getJSONApi()
@@ -93,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Call<LoginResultDto> call, Response<LoginResultDto> response) {
                         CommonUtils.hideLoading();
                         if (response.isSuccessful()) {
-                            Log.d("server", "Good");
+                            Log.e("server", "Login Success");
                         } else {
                             try {
                                 String json = response.errorBody().string();
@@ -102,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                 emailLayout.setError(result.getEmail());
                                 passwordLayout.setError(result.getPassword());
                             } catch (Exception ex) {
+                                Log.e("server", "Bad");
                             }
                         }
                     }
@@ -112,7 +101,5 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("server", "Bad");
                     }
                 });
-
-        Log.d("Click my", email.getText().toString());
     }
 }

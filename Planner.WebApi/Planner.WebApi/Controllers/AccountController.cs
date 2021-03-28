@@ -1,30 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Planner.WebApi.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Planner.Application.Account;
+using Planner.Application.Account.Login;
+using Planner.Application.Account.Registration;
 using System.Threading.Tasks;
 
 namespace Planner.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [Produces("application/json")]
-    public class AccountController : ControllerBase
+    [AllowAnonymous]
+    public class AccountController : BaseController
     {
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO model)
+        [HttpPost("login")]
+        public async Task<ActionResult<UserViewModel>> LoginAsync(LoginCommand command)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(CustomValidator.GetErrorsByModel(ModelState)); 
-            }
-            return Ok(new ResultDto
-            {
-                Token = "asdfalflaskdfalsdfj"
-            });
+            return await Mediator.Send(command);
         }
 
+        [HttpPost("registration")]
+        public async Task<ActionResult<UserViewModel>> RegistrationAsync(RegistrationCommand command)
+        {
+            return await Mediator.Send(command);
+        }
     }
 }

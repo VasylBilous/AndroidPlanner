@@ -8,11 +8,11 @@ namespace Planner.WebApi.DTO
 {
     public class LoginDTO
     {
-        [Required(ErrorMessage = "Email is required"), EmailAddress(ErrorMessage = "Wrong email")]
+        [Required(ErrorMessage = "Обовязкове поле"), EmailAddress(ErrorMessage ="Не валідна пошта")]
         public string Email { get; set; }
 
-        [RegularExpression("/^.{6,}$/", ErrorMessage = "WrongPassword")]
-        [Required(ErrorMessage = "Password is required")]
+        //[RegularExpression(pattern: "", ErrorMessage = "")]
+        [Required(ErrorMessage = "Обовязкове поле")]
         public string Password { get; set; }
     }
 }
